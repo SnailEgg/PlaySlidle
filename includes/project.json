@@ -1,0 +1,28 @@
+{
+    "levels":
+    [[
+        [["yellow", ""],             ["", ""],                  ["", "yellow"]]
+    ],
+    [
+        [["", "yellow"],            ["magenta", ""],            null],
+        [null,                      null,                       null],
+        [null,                      ["yellow", ""],             ["", "magenta"]]
+    ],
+    [
+        [["", "magenta"],           ["", ""],                   ["magenta", "yellow"]],
+        [null,                      ["cyan", ""],               null],
+        [["yellow", ""],            ["", ""],                   ["", ""]]
+    ],
+    [
+        [["magenta", "magenta"],    ["", "yellow"],             null],
+        [["", ""],                  ["cyan", ""],               ["cyan", ""]],
+        [null,                      ["cyan", ""],               ["yellow", ""]]
+    ],
+    [
+        [["yellow", ""],            ["cyan", "magenta"],        ["", ""]],
+        [["cyan", "cyan"],          ["cyan", "cyan"],           ["", "cyan"]],
+        [["", ""],                  ["magenta", "yellow"],      ["", ""]]
+    ]],
+
+    "scores": []
+}

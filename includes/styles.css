@@ -1,0 +1,199 @@
+/* VARIABLES */
+
+:root {
+    --color-off-white: #f2f2f2;
+	--color-off-black: #121212;
+	--color-off-grey: hsl(36, 0%, 31%);
+	--color-bright-white: hsl(34, 0%, 97%);
+	--color-light: hsl(36, 0%, 75%);
+	--color-medium: #808080;
+	--color-dark: hsl(34, 0%, 22%);
+    --color-blue-deep: #1d2f6f;
+	--color-cyan: #28a3cc;
+    --color-cyan-strong: #006b8f;
+    --color-yellow: #fdfb58;
+    --color-yellow-strong: #ddcf03;
+    --color-magenta: #e46298;
+    --color-magenta-strong: #d31d69;
+
+    --dragger-width-ratio: calc(2 / 3);
+    --dropper-gutter-ratio: 0.1;
+    --dropper-border-radius-ratio: 0.08;
+    --dropper-border-width-ratio: 0.05;
+    --dragger-border-width-ratio: 0.75;
+
+    --dropper-width: max(min(20vw, 150px), 80px);
+    --dropper-gutter-size: calc(var(--dropper-width) * var(--dropper-gutter-ratio));
+    --dropper-border-radius: calc(var(--dropper-width) * var(--dropper-border-radius-ratio));
+    --dropper-border-width: calc(var(--dropper-width) * var(--dropper-border-width-ratio));
+    --dragger-width: calc(var(--dropper-width) * var(--dragger-width-ratio));
+    --dragger-border-width: calc(var(--dropper-border-width) * var(--dragger-border-width-ratio));
+    --game-box-width: calc(calc(var(--dropper-width) * 3) + calc(var(--dropper-gutter-size) * 8));
+}
+
+
+/* PAGE STYLES */
+
+html {
+    touch-action: manipulation;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-off-black);
+    color: var(--color-off-white);
+}
+
+
+/* HELPER CLASSES */
+
+.flex {
+    display: flex;
+}
+
+.bg-black {
+    background-color: var(--color-off-black);
+}
+
+.text-yellow {
+    color: var(--color-yellow);
+}
+
+.text-magenta {
+    color: var(--color-magenta);
+}
+
+.text-cyan {
+    color: var(--color-cyan);
+}
+
+.game-width {
+    width: var(--game-box-width);
+}
+
+
+/* TITLE STYLES */
+
+#title_bar * {
+    margin: 0 1rem 0 1rem;
+}
+
+#title_bar img {
+    width: 4rem;
+    aspect-ratio: 1/1;
+}
+
+#title_bar h1 {
+    font-size: calc(2rem + 1.5vw);
+}
+
+/* GAME WINDOW SECTIONS */
+
+#menu {
+    height: var(--game-box-width);
+    width: var(--game-box-width);
+}
+
+#grid_background {
+    min-height: var(--game-box-width);
+    width: var(--game-box-width);
+    border-radius: calc(var(--dropper-border-radius) / 2);
+}
+
+#game_box {
+    background-color: var(--color-dark);
+    color: var(--color-off-white);
+    border-radius: calc(var(--dropper-border-radius) / 2);
+}
+
+
+/* GAME STYLES */
+
+.game-row {
+    display: flex;
+    justify-content: center;
+    padding: var(--dropper-gutter-size) 0 var(--dropper-gutter-size) 0;
+}
+
+.dragger {
+    height: var(--dragger-width);
+    width: var(--dragger-width);
+    position: absolute;
+    border-width: var(--dragger-border-width);
+    border-style: solid;
+    border-radius: var(--dropper-border-radius);
+}
+
+.dragger.cyan {
+    border-color: var(--color-cyan-strong);
+    background-color: var(--color-cyan);
+}
+
+.dragger.magenta {
+    border-color: var(--color-magenta-strong);
+    background-color: var(--color-magenta);
+}
+
+.dragger.yellow {
+    border-color: var(--color-yellow-strong);
+    background-color: var(--color-yellow);
+}
+
+.dropper-size {
+    width: var(--dropper-width);
+    height: var(--dropper-width);
+    margin: 0 var(--dropper-gutter-size) 0 var(--dropper-gutter-size);
+}
+
+.dropper {
+    border-radius: var(--dropper-border-radius);
+    background-color: var(--color-medium);
+    transition: background-color 300ms;
+}
+
+.dropper.goal-space {
+    border-width: var(--dropper-border-width);
+    border-style: dashed;
+}
+
+.dropper.goal-space.satisfied {
+    border-style: solid;
+}
+
+.dropper.cyan {
+    border-color: var(--color-cyan-strong);
+}
+
+.dropper.magenta {
+    border-color: var(--color-magenta-strong);
+}
+
+.dropper.yellow {
+    border-color: var(--color-yellow-strong);
+}
+
+.active {
+    border-style: dashed !important;
+}
+
+
+.dropper.highlighted {
+    background-color: var(--color-light)
+}
+
+.dropper.targeted {
+    background-color: var(--color-off-white) !important;
+}
+
+/* EXTRA STYLES */
+.secret {
+    opacity: 1%;
+    transition: opacity 300ms;
+}
+
+.secret.secret-revealed {
+    opacity: 100%;
+}
