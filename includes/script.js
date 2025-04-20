@@ -29,6 +29,32 @@
     Async/Await/Promises:       Line 505
 */
 
+const levelLayouts = [
+    [
+        [["yellow", ""],             ["", ""],                  ["", "yellow"]]
+    ],
+    [
+        [["", "yellow"],            ["magenta", ""],            null],
+        [null,                      null,                       null],
+        [null,                      ["yellow", ""],             ["", "magenta"]]
+    ],
+    [
+        [["", "magenta"],           ["", ""],                   ["magenta", "yellow"]],
+        [null,                      ["cyan", ""],               null],
+        [["yellow", ""],            ["", ""],                   ["", ""]]
+    ],
+    [
+        [["magenta", "magenta"],    ["", "yellow"],             null],
+        [["", ""],                  ["cyan", ""],               ["cyan", ""]],
+        [null,                      ["cyan", ""],               ["yellow", ""]]
+    ],
+    [
+        [["yellow", ""],            ["cyan", "magenta"],        ["", ""]],
+        [["cyan", "cyan"],          ["cyan", "cyan"],           ["", "cyan"]],
+        [["", ""],                  ["magenta", "yellow"],      ["", ""]]
+    ]
+];
+
 // global object for holding game and level data
 const data = {
     activeDragger: null, // currently selected dragger for tap-to-move controls
@@ -415,16 +441,11 @@ const fetchLayout = async (incrementLevel = false) => {
         try {
             // fetch and locally save level layouts
             data.levels = await fetch("https://jordan.json.compsci.cc/levels", { signal: AbortSignal.timeout(1000) }).then(response => response.json());
+        } catch (error) {
+            data.levels = levelLayouts;
+        } finally {
             // keep track of total number of levels
             data.totalLevels = data.levels.length;
-        } catch (error) {
-            // display error message
-            $("#root").html(`<h2>Oops! Couldn't load level layouts.</h2><p>Are you connected to the VPN?</p><p>Error: ${error.message}`);
-            // fetch was unsuccessful, so ensure data.levels is null so the fetch can be reattempted later
-            data.levels = null;
-            
-            // return false to indicate level could not be loaded
-            return false;
         }
     }
 
@@ -641,7 +662,7 @@ const displayResults = async () => {
     const sendingResult = await sendScores();
     // if sending failed, alert the user
     if (sendingResult !== true) {
-        createAlert("Couldn't save your scores. Are you connected to the VPN?", `Error: ${sendingResult}`, "warning", $("#result_charts"));
+        createAlert("Couldn't save your scores. (this is only available when connected to the college network).", `Error: ${sendingResult}`, "warning", $("#result_charts"));
     }
 
     // set up dataset arrays with this game's scores
@@ -696,7 +717,7 @@ const displayResults = async () => {
         });
     // otherwise, alert user that scores couldn't be fetched
     } else {
-        createAlert("Couldn't load previous scores. Are you connected to the VPN?", `Error: ${pastScoresRequest}`, "warning", $("#result_charts"));
+        createAlert("Couldn't load previous scores (this is only available when connected to the college network).", `Error: ${pastScoresRequest}`, "warning", $("#result_charts"));
     }
 
     // create array of strings like "Level #" for each level to be used as labels on charts
