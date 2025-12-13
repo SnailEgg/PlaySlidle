@@ -438,15 +438,9 @@ class Dropper {
 const fetchLayout = async (incrementLevel = false) => {
     // attempt to fetch level data if it isn't already saved
     if (!data.levels) {
-        try {
-            // fetch and locally save level layouts
-            data.levels = await fetch("https://jordan.json.compsci.cc/levels", { signal: AbortSignal.timeout(1000) }).then(response => response.json());
-        } catch (error) {
-            data.levels = levelLayouts;
-        } finally {
-            // keep track of total number of levels
-            data.totalLevels = data.levels.length;
-        }
+        data.levels = levelLayouts;
+        // keep track of total number of levels
+        data.totalLevels = data.levels.length;
     }
 
     // display game interface
