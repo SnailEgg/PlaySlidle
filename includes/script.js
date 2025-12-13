@@ -652,13 +652,6 @@ const displayResults = async () => {
         data.timesChart.destroy();
     }
 
-    // try to send scores to server
-    const sendingResult = await sendScores();
-    // if sending failed, alert the user
-    if (sendingResult !== true) {
-        createAlert("Couldn't save your scores. (this is only available when connected to the college network).", `Error: ${sendingResult}`, "warning", $("#result_charts"));
-    }
-
     // set up dataset arrays with this game's scores
     let moveDatasets = [{
         label: "You", 
@@ -672,47 +665,6 @@ const displayResults = async () => {
         borderColor: "#ddcf03",
         backgroundColor: "#fdfb58"
     }];
-
-    // try to fetch previous scores from server
-    let pastScoresRequest = await fetchScores();
-
-    // if scores were successfully fetched, add average and best score datasets for moves and time
-    if (pastScoresRequest.succeeded) {
-        let pastScores = pastScoresRequest.scores; // all past scores
-        let avgScores = getAverageScores(pastScores); // average scores for all levels
-        let bestScores = getBestScores(pastScores); // best scores for all levels
-
-        // add average and best move count datasets
-        moveDatasets.push({
-            label: 'Average',
-            data: avgScores.moves,
-            borderColor: "#006b8f",
-            backgroundColor: "#28a3cc"
-        });
-        moveDatasets.push({
-            label: 'Best',
-            data: bestScores.moves,
-            borderColor: "#d31d69",
-            backgroundColor: "#e46298"
-        });
-
-        // add average and best time datasets
-        timeDatasets.push({
-            label: 'Average',
-            data: avgScores.times,
-            borderColor: "#006b8f",
-            backgroundColor: "#28a3cc"
-        });
-        timeDatasets.push({
-            label: 'Best',
-            data: bestScores.times,
-            borderColor: "#d31d69",
-            backgroundColor: "#e46298"
-        });
-    // otherwise, alert user that scores couldn't be fetched
-    } else {
-        createAlert("Couldn't load previous scores (this is only available when connected to the college network).", `Error: ${pastScoresRequest}`, "warning", $("#result_charts"));
-    }
 
     // create array of strings like "Level #" for each level to be used as labels on charts
     let levelLabels = [];
